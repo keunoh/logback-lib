@@ -1,0 +1,9 @@
+package core.spi;
+
+public interface LifeCycle {
+    void start();
+
+    void stop();
+
+    boolean isStarted();
+}

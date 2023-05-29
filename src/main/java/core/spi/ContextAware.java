@@ -1,6 +1,7 @@
 package core.spi;
 
 import core.Context;
+import core.status.Status;
 
 public interface ContextAware {
     void setContext(Context context);

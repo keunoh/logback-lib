@@ -1,6 +1,10 @@
 package org.ch.qos;
 
+import core.ConsoleAppender;
+import core.encoder.LayoutWrappingEncoder;
+import core.spi.ContextAwareBase;
 import lib.slf4j.Logger;
+import org.ch.qos.spi.Configurator;
 import org.ch.qos.spi.ILoggingEvent;
 
 public class BasicConfigurator extends ContextAwareBase implements Configurator {

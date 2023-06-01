@@ -97,7 +97,7 @@ public class FormatInfo {
     }
 
     public boolean equals(Object o) {
-        if (this == 0)
+        if (this == o)
             return true;
         if (!(o instanceof FormatInfo))
             return false;

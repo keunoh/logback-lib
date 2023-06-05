@@ -1,7 +1,12 @@
 package org.ch.qos;
 
 import core.ContextBase;
+import core.boolex.EventEvaluator;
 import core.spi.FilterReply;
+import core.status.StatusListener;
+import core.status.StatusManager;
+import core.status.WarnStatus;
+import core.spi.LifeCycle
 import lib.slf4j.ILoggerFactory;
 import lib.slf4j.Marker;
 import org.ch.qos.spi.LoggerContextListener;
@@ -14,7 +19,9 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
-public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCyle {
+import static core.CoreConstants.EVALUATOR_MAP;
+
+public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCycle {
 
     public static final boolean DEFAULT_PACKAGING_DATA = false;
 
@@ -190,7 +197,15 @@ public class LoggerContext extends ContextBase implements ILoggerFactory, LifeCy
     }
 
     final FilterReply getTurboFilterChainDecision_0_3OrMore(final Marker marker, final Logger logger, final Level level, final String format,
-                                                            final Throwable t) {
+                                                            final Object[] params, final Throwable t) {
+        if (turboFilterList.size() == 0) {
+            return FilterReply.NEUTRAL;
+        }
+        return turboFilterList.getTurboFilterChainDecision(marker, logger, level, format, params, t);
+    }
+
+    final FilterReply getTurboFilterChainDecision_1(final Marker marker, final Logger logger, final Level level, final String format, final Object param,
+                                                    final Throwable t) {
         if (turboFilterList.size() == 0) {
             return FilterReply.NEUTRAL;
         }

@@ -2,6 +2,7 @@ package core.pattern.parser;
 
 import core.CoreConstants;
 import core.pattern.Converter;
+import core.pattern.FormatInfo;
 import core.spi.ContextAwareBase;
 import core.spi.ScanException;
 
@@ -73,30 +74,102 @@ public class Parser<E> extends ContextAwareBase {
 
     Node T() throws ScanException {
         Token t = getCurrentToken();
+        expectNotNull(t, "a LITERAL or '%'");
+
+        switch (t.getType()) {
+            case Token.LITERAL:
+                advanceTokenPointer();
+                FormatInfo fi;
+                Token u = getCurrentToken();
+                FormattingNode c;
+                expectNotNull(u, "a FORMAT_MODIFIER, SIMPLE_KEYWORD or COMPOUND_KEYWORD");
+                if (u.getType() == Token.FORMAT_MODIFIER) {
+                    fi = FormatInfo.valueOf((String) u.getValue());
+                    advanceTokenPointer();
+                    c = C();
+                    c.setFormatInfo(fi);
+                } else {
+                    c = C();
+                }
+                return c;
+
+            default:
+                return null;
+        }
+
+    }
+
+    FormattingNode C() throws ScanException {
+        Token t = getCurrentToken();
+        expectNotNull(t, "a LEFT_PARENTHESIS or KEYWORD");
+        int type = t.getType();
+        switch (type) {
+            case Token.SIMPLE_KEYWORD:
+                return SINGLE();
+            case Token.COMPOSITE_KEYWORD:
+                advanceTokenPointer();
+                return COMPOSITE(t.getValue().toString());
+            default:
+                throw new IllegalStateException("Unexpected token " + t);
+        }
+    }
+
+    FormattingNode SINGLE() throws ScanException {
+        Token t = getNextToken();
+        SimpleKeywordNode keywordNode = new SimpleKeywordNode(t.getValue());
+
+        Token ot = getCurrentToken();
+        if (ot != null && ot.getType() == Token.OPTION) {
+            List<String> optionList = (List<String>) ot.getValue();
+            keywordNode.setOptions(optionList);
+            advanceTokenPointer();
+        }
+        return keywordNode;
+    }
+
+    FormattingNode COMPOSITE(String keyword) throws ScanException {
+        CompositeNode compositeNode = new CompositeNode(keyword);
+
+        Node childNode = E();
+        compositeNode.setChildNode(childNode);
+
+        Token t = getNextToken();
+
+        if (t == null || t.getType() != Token.RIGHT_PARENTHESIS) {
+            String msg = "Expecting RIGHT_PARENTHESIS token but got " + t;
+            addError(msg);
+            addError("See also " + MISSING_RIGHT_PARENTHESIS);
+            throw new ScanException(msg);
+        }
+        Token ot = getCurrentToken();
+        if (ot != null && ot.getType() == Token.OPTION) {
+            List<String> optionList = (List<String>) ot.getValue();
+            compositeNode.setOptions(optionList);
+            advanceTokenPointer();
+        }
+        return compositeNode;
+    }
+
+    Token getNextToken() {
+        if (pointer < tokenList.size()) {
+            return (Token) tokenList.get(pointer++);
+        }
+        return null;
+    }
+
+    Token getCurrentToken() {
+        if (pointer < tokenList.size()) {
+            return (Token) tokenList.get(pointer);
+        }
+        return null;
+    }
+
+    void advanceTokenPointer() {
+        pointer++;
+    }
+
+    void expectNotNull(Token t, String expected) {
+        if (t == null)
+            throw new IllegalStateException("All tokens consumed but was expecting " + expected);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

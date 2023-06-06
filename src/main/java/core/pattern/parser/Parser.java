@@ -3,6 +3,8 @@ package core.pattern.parser;
 import core.CoreConstants;
 import core.pattern.Converter;
 import core.pattern.FormatInfo;
+import core.pattern.IdentityCompositeConverter;
+import core.pattern.ReplacingCompositeConverter;
 import core.spi.ContextAwareBase;
 import core.spi.ScanException;
 

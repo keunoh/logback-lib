@@ -5,6 +5,8 @@ import core.pattern.Converter;
 import core.pattern.FormatInfo;
 import core.pattern.IdentityCompositeConverter;
 import core.pattern.ReplacingCompositeConverter;
+import core.pattern.util.IEscapeUtil;
+import core.pattern.util.RegularEscapeUtil;
 import core.spi.ContextAwareBase;
 import core.spi.ScanException;
 

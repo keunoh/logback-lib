@@ -1,6 +1,9 @@
 package core.pattern.parser;
 
 import core.CoreConstants;
+import core.pattern.util.IEscapeUtil;
+import core.pattern.util.RegularEscapeUtil;
+import core.pattern.util.RestrictedEscapeUtil;
 import core.spi.ScanException;
 
 import java.util.ArrayList;
@@ -14,8 +17,8 @@ public class TokenStream {
 
     final String pattern;
     final int patternLength;
-    final IEsacpeUtil escapeUtil;
-    final IEsacpeUtil optionEscapeUtil = new RestrictedEscapeUtil();
+    final IEscapeUtil escapeUtil;
+    final IEscapeUtil optionEscapeUtil = new RestrictedEscapeUtil();
     TokenizerState state = TokenizerState.LITERAL_STATE;
     int pointer = 0;
 

@@ -1,5 +1,8 @@
 package core.rolling.helper;
 
+import core.pattern.DynamicConverter;
+import core.pattern.FormatInfo;
+
 public class IntegerTokenConverter extends DynamicConverter<Object> implements MonoTypedConverter {
 
     public final static String CONVERTER_KEY = "i";

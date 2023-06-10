@@ -1,6 +1,7 @@
 package core.rolling;
 
 import core.FileAppender;
+import core.rolling.helper.CompressionMode;
 import core.spi.LifeCycle;
 
 public interface RollingPolicy extends LifeCycle {

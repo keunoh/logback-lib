@@ -11,7 +11,7 @@ import java.util.List;
 
 import static core.CoreConstants.LINE_SEPARATOR;
 
-public class ViewStatusMessagesServletBase extends HttpServlet {
+abstract public class ViewStatusMessagesServletBase extends HttpServlet {
     private static final long serialVersionUID = -3551928133801157219L;
     private static CachingDateFormatter SDF = new CachingDateFormatter("yyyy-MM-dd HH:mm:ss");
 

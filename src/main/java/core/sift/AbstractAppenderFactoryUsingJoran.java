@@ -2,6 +2,7 @@ package core.sift;
 
 import core.Appender;
 import core.Context;
+import core.joran.spi.JoranException;
 
 import java.util.List;
 import java.util.Map;

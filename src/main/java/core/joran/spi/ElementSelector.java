@@ -47,7 +47,7 @@ public class ElementSelector extends ElementPath {
             String l = this.partList.get(lSize - i);
             String r = p.partList.get(rSize - i);
 
-            if (equalityCheck(i, r)) {
+            if (equalityCheck(l, r)) {
                 match++;
             } else {
                 break;

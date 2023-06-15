@@ -1,6 +1,7 @@
 package core.joran;
 
 import core.Context;
+import core.joran.event.SaxEvent;
 import core.joran.spi.*;
 import core.spi.ContextAwareBase;
 import core.status.StatusUtil;

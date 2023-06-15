@@ -1,6 +1,8 @@
 package core.joran.spi;
 
 import core.Context;
+import core.joran.event.InPlayListener;
+import core.joran.event.SaxEvent;
 import core.spi.ContextAwareBase;
 import core.spi.PropertyContainer;
 import core.util.OptionHelper;

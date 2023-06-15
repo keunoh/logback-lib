@@ -1,7 +1,7 @@
 package core.joran;
 
 import core.Context;
-import core.joran.spi.JoranException;
+import core.joran.spi.*;
 import core.spi.ContextAwareBase;
 import core.status.StatusUtil;
 import org.xml.sax.InputSource;
@@ -111,7 +111,7 @@ public abstract class GenericConfigurator extends ContextAwareBase {
     protected void buildInterpreter() {
         RuleStore rs = new SimpleRuleStore(context);
         addInstanceRules(rs);
-        this.interpreter = new InterPreter(context, rs, initialElementPath());
+        this.interpreter = new Interpreter(context, rs, initialElementPath());
         InterpretationContext interpretationContext = interpreter.getInterpretationContext();
         interpretationContext.setContext(context);
         addImplicitRules(interpreter);

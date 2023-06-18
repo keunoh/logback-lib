@@ -80,7 +80,7 @@ public class ElementPath {
         }
     }
 
-    public String peekList() {
+    public String peekLast() {
         if (!partList.isEmpty()) {
             int size = partList.size();
             return (String) partList.get(size - 1);
@@ -88,6 +88,7 @@ public class ElementPath {
             return null;
         }
     }
+
 
     public int size() {
         return partList.size();
